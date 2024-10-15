@@ -1,0 +1,120 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "title": {
+    "text": "International Arrivals by Visa Type (2020-2023)"
+  },
+
+  "width": "container",
+  "height": 150,
+  
+  "config": {
+    "font": "Lora",
+    "title": {
+      "font": "Lora",
+      "fontSize": 20,
+      "fontWeight": "bold",
+      "anchor": "middle"
+    },
+    "axis": {
+      "labelFont": "Lora",
+      "titleFont": "Lora",
+      "titleFontSize": 14,
+      "labelFontSize": 12
+    },
+    "legend": {
+      "labelFont": "Lora",
+      "titleFont": "Lora",
+      "labelFontSize": 12,
+      "titleFontSize": 14
+    },
+    "text": {
+      "font": "Lora"
+    }
+  },
+
+  "data": {
+    "url": "https://raw.githubusercontent.com/Jessiebel/DataVisulisation2/refs/heads/main/DataVisualisation2/data/Visa_All.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+
+  "transform": [
+    {
+      "calculate": "year(datum.Date)",
+      "as": "Year"
+    },
+
+    {
+      "fold": [
+        "Special Category Visa",
+        "Permanent Family Visa",
+        "Permanent Skilled Visa",
+        "Permanent Other Visa",
+        "Temporary Student Visa",
+        "Temporary Skilled Visa",
+        "Temporary Visitor Visa",
+        "Temporary Work Visa",
+        "Temporary Other Visa",
+        "Other Visa"
+      ],
+      "as": ["VisaType", "Value"]
+    },
+
+    {
+      "filter": "datum.Year == SelectedYear"
+    },
+
+    {
+      "aggregate": [
+        {"op": "sum", "field": "Value", "as": "TotalValue"}
+      ],
+      "groupby": ["VisaType", "Year", "State"]
+    }
+  ],
+  
+  "params": [
+    {
+      "name": "SelectedYear",
+      "value": 2023,
+      "bind": {
+        "input": "select",
+        "options": [2020, 2021, 2022, 2023],
+        "labels": ["2020", "2021", "2022", "2023"],
+        "name": "Select Year: "
+      }
+    }
+  ],
+
+  "mark": {"type":"bar", "stroke":"black", "strokeWidth":0.3},
+  "encoding": {
+    "y": {
+      "field": "State",
+      "type": "nominal",
+      "axis": {"title": ""}
+    },
+
+    "x": {
+      "field": "TotalValue",
+      "type": "quantitative",
+      "axis": {"title": "Percentace of Travellers"},
+      "stack": "normalize"
+    },
+
+    "color": {
+      "field": "VisaType",
+      "type": "nominal",
+      "legend": {"title": "Visa Type"},
+      "scale": {
+            "range": ["#F9D835","#F1A04E","#F17828","#FF6F00","#D32F2F","#9B36A0","#7A2C8B","#5D1C7C","#47107F","#5C0E84"]
+          }
+    },
+    "tooltip":[
+      {"field": "Year"},
+      {"field": "State"},
+      {"field": "VisaType", "title":"Visa Type"},
+      {"field": "TotalValue", "title":"Number of Travellers", "format": ",.0f"}
+    ]
+  }
+}

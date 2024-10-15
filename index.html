@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Vega Packages -->
+        <script src="https://cdn.jsdelivr.net/npm/vega@5.30.0"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+        <script src="./src/js/chart.js"></script>
+
+        <title>Australian Travel Trends</title>
+
+        <!-- Google Fonts -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap">
+
+        <style>
+            body, h1, h3, p {
+                font-family: 'Lora', serif;
+                color: #474747 ;
+            }
+
+            .hero-section {
+                background: url('https://crossoverlaw.com.au/wp-content/uploads/2021/04/nils-nedel-ONpGBpns3cs-unsplash-1024x684.jpg') no-repeat center center/cover;
+                height: 50vh;
+            }
+
+            /* Fix slider position and width*/
+            label {
+                padding-right: 100px;
+                font-weight: bold;
+            }
+            input[type=range] {
+                width: 400px; 
+                height: 6px; 
+            }
+
+            .footer-column ul li a {
+                color: white;
+                text-decoration: none;
+            }
+
+            .footer-column ul li a:hover {
+                text-decoration: underline;
+            }
+        </style>
+    </head>
+    
+    <body class="bg-light" style="min-width: 1500px;">
+
+        <!-- Hero Section -->
+        <div class="hero-section bg-cover bg-center d-flex align-items-center justify-content-center">
+            <div class="text-center">
+                <h1 class="display-4 text-uppercase fw-bold letter-spacing mb-3" style="color: white;">Australia Bound</h1>
+                <p class="lead" style="color: white;">A Summary of International Arrivals in Australia</p>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="container py-5 mt-3 content-section" style="min-width: 1300px;">
+            <div class="bg-white p-5 rounded shadow-sm text-start">
+
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Intro -->
+                        <h2 class="mb-4" style="color: #ff770f;"><b>Understanding Australia's International Travel Trends</b></h2>
+                        <p class="mb-2 text-start ">
+                            <b>Australia</b>, with its stunning landscapes, vibrant cities, and unique wildlife, continues to be a <b>top 
+                            destination for international travelers</b>. From the <b>early 1990s</b>, Australia experienced <b>steady growth</b> 
+                            in international visitors, driven by its <b>landscapes, multicultural society,</b> and <b>thriving economy</b>.
+                            The 2000 Sydney Olympics and Australia's participation in global events also helped bolster its profile. 
+                            In recent years, the influx of overseas visitors has become a <b>key contributor</b> to the country's <b>economy</b>. 
+                            The data explored in this visualisation covers the variety of international arrivals in Australia including their
+                            <b>country of citizenship, visa type</b> and <b>state/teritory of arrival</b>.
+                        </p>
+                        <p class="mb-4 text-secondary">
+                            <i>Note: "Arrivals" includes Australian citizens returning home as well as international visitors</i>
+                        </p>
+
+                        <!-- Incoming Travellers -->
+                        <h4 class="mb-1" style="color: #ff770f;"><b>Country of Citizenship</b></h4>
+                        <p class="text-start mb-2">
+                            With the <b>ease and availability</b> of international travel nowadays, people arriving in Australia from overseas 
+                            come from an <b>increasing variety of countries</b>. As would be expected, a large number of the country's 
+                            international arrivals are <b>Australian citizens returning from overseas</b>. This is followed by citizens from countries like 
+                            <b>China, New Zealand, and the United Kingdom</b>, which have historically had strong travel and immigration ties with Australia. 
+                            Over the years, Australia has also seen a rise in visitors from countries like <b>India and Southeast Asia</b>, reflecting the growing economic 
+                            and cultural connections in the region. The below map shows the number of travellers from each country for the years 1991-2023.
+                        </p>
+                        <p class="mb-4 text-secondary">
+                            <i> Note: The significant reduction in travellers globally in 2020 and 2021 is due to the Covid-19 Lockdowns.</i>
+                        </p>
+                        <div id="Arrivals_Map_by_Home_Country" class="w-100 mx-auto mb-5 text-center"></div> 
+                    </div>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-4">
+                        <!-- Incoming Visas-->
+                        <h4 class="mb-1" style="color: #ff770f;"><b>Visa Type</b></h4>
+                        <p class="text-start mb-4">
+                            Australia's visa system is designed to cater to a wide range of international travelers, with different visa types based on the 
+                            purpose of the visit. The majority of arrivals are on <b>visitor visas</b>, but significant numbers also arrive on <b>student visas</b> 
+                            and <b>work visas</b>. Over the years of <b>Covid-19 lockdowns</b> however, (primarily 2021), we see a distinct change in the visa holding patterns with a 
+                            large number of <b>special visas</b> granted to allow entry to the country.
+                        </p>
+                    </div>
+
+                    <div class="col-8">
+                        <div id="Arrivals_Stacked_Bar_by_Visa" class="w-100 mx-auto mb-5 text-end"></div> 
+                    </div>
+                </div>
+                        
+                
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Incoming States -->
+                        <h4 class="mb-1" style="color: #ff770f;"><b>State of Arrival</b></h4>
+                        <p class="text-start mb-4">
+                            Most international arrivals land in <b>Sydney (New South Wales)</b>, Australia's largest and most iconic city, home to major attractions like 
+                            the Sydney Opera House and Harbour Bridge. <b>Melbourne (Victoria)</b> follows closely behind, known for its cultural vibrancy. 
+                            <b>Brisbane (Queensland)</b> and <b>Perth (Western Australia)</b> are also popular entry points, especially for travelers seeking access to Australia's 
+                            tropical beaches or mining industry, respectively.
+                        </p>
+                        
+                        <div id="Arrivals_Stacked_Area_by_State" class="w-100 mb-5"></div> 
+                        
+                        <p class="text-start mb-5">
+                            While Sydney and Melbourne lead the way, other states like <b>South Australia and Tasmania</b> are seeing increasing numbers of international visitors 
+                            as well, as travelers seek out less crowded destinations. Australia's diverse geography and state-by-state travel appeal make it a unique destination 
+                            for a wide range of international travelers.
+                        </p>
+                    </div>
+                </div> 
+                        
+            </div>
+        </div>
+
+        <!-- Footer Section (Closing the Story) -->
+        <footer class="bg-dark text-white py-4">
+            <div class="container">
+                <div class="d-flex justify-content-between">
+                    <!-- First Column for Author, Organisation, and Published Info -->
+                    <div class="footer-column">
+                        <h5 class="mb-1" style="color: white;"><b>Created By:</b></h5>
+                        <p class="mb-0" style="color: white;">Jessica White - Monash University</p>
+                        <p class="mb-4" style="color: white;">Last Updated: 15/10/2024</p>
+                    </div>
+        
+                    <!-- Second Column for Data Sources -->
+                    <div class="footer-column">
+                        <h5 class="mb-1"><b>Data Sources:</b></h5>
+                        <ul class="list-unstyled">
+                            <li><a href="https://www.abs.gov.au/statistics/industry/tourism-and-transport/overseas-arrivals-and-departures-australia/latest-release">Australian Bureau of Statistics (ABS) - Overseas Arrivals and Departures</a></li>
+                            <li><a href="https://github.com/FIT3179/Vega-Lite/blob/main/3_choropleth_map/js/ne_110m_admin_0_countries.topojson">FIT3179 Vega-Lite All Countries Topojson</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>        
+    </body>
+</html>
